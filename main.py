@@ -6,6 +6,7 @@ import features as ft
 import pathlib
 from os import listdir
 from os.path import isfile, join
+import functions
 
 dataFolder = pathlib.Path("../dataset/201801a_splitted/")
 onlyFiles = [f.split(".")[0] for f in listdir(dataFolder) if isfile(join(dataFolder, f))]  # List all data files available
@@ -14,7 +15,7 @@ frameSize = 1024  # Up to 1024
 nFeatures = 9
 
 modulations = ['8PSK', '16PSK', '16QAM', '64QAM', '256QAM', 'BPSK', 'QPSK']
-snr = np.linspace(-14, 20, 18, dtype=int)
+snr = np.linspace(-20, 30, 26, dtype=int)
 
 def generateFeaturesData(modulations, snr):
     # Reads the pickles and stores in 'data' array in the following format:
@@ -48,6 +49,8 @@ def generateFeaturesData(modulations, snr):
         pickle.dump(features, handle, protocol=pickle.HIGHEST_PROTOCOL)
     del features
 
-#generateFeaturesData(modulations, snr)
-ft.plotFeatures()
+    
+generateFeaturesData(modulations, snr)
+functions.convertToMat('features.pickle')
+ft.plotFeatures(modulations, snr)
 print('well done!')

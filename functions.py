@@ -1,5 +1,9 @@
 import math
 import numpy as np
+import scipy.io
+import pathlib
+from os.path import join
+import pickle
 
 def gmax(input):
     fftsquared = abs(np.fft.fft(input)) ** 2
@@ -49,3 +53,13 @@ def instantaneous_absolute(input):
 def instantaneous_cn_absolute(input):
     output = abs(input) / mean(abs(input)) - 1
     return output
+
+def convertToMat(data):    
+    matFolder = pathlib.Path("./Matlab/")
+
+    try:
+        with open(data, 'rb') as handle:
+            aux = pickle.load(handle)
+            scipy.io.savemat(join(matFolder, "features.mat"), mdict={'pickle-data':aux})
+    except:
+        print("An error has occurred throughout files conversion!")

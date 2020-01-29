@@ -21,11 +21,9 @@ def calculate_features(input_signal):
     result = [f1, f2, f3, f4, f5, f6, f7, f8, f9]
     return result
 
-def plotFeatures():
-    #sns.set()
-    modulations = ['8PSK', '16PSK', '16QAM', '64QAM', '256QAM', 'BPSK', 'QPSK'] #TODO: receive these as functions parameters
-    snr = np.linspace(-14, 20, 18, dtype=int)
-    figure_folder = pathlib.Path("./figures/")
+def plotFeatures(modulations, snrValues):
+    #sns.set()    
+    figure_folder = pathlib.Path("./figures/")    
 
     dataFolder = pathlib.Path("./features.pickle")
     with open(dataFolder, 'rb') as handle:
@@ -34,29 +32,32 @@ def plotFeatures():
     meanFeatures = np.zeros((len(data), len(data[0]), len(data[0][0][0]))) #mod/snr/ft1...ftn
     #Calculates the mean of all features
     for mod in range(len(data)):
+        print("Calculating mean features from {}".format(modulations[mod]))
         for snr in range(len(data[0])):
             for feature in range(len(data[0][0][0])): 
                 aux = np.array([])
                 for frame in range(len(data[0][0])):
                     aux = np.append(aux, data[mod][snr][frame][feature])
-                meanFeatures[mod][snr][feature] = np.mean(aux)    
+                meanFeatures[mod][snr][feature] = np.mean(aux)                
 
     for feature in range(len(meanFeatures[mod][snr])):
-        plt.figure(figsize=(6.4, 3.6), dpi=300)
+        print("Calculating feature {}".format(feature))
+        plt.figure(dpi=300)
         plt.xlabel('SNR')
+        plt.xticks(np.arange(len(snrValues)), [str(i) for i in snrValues], rotation=20)    
         plt.ylabel('Value')
         plt.title('Feature {}'.format(feature))        
         for mod in range(len(meanFeatures)):
             aux = np.array([])
             for snr in range(len(meanFeatures[mod])):
                 aux = np.append(aux, meanFeatures[mod][snr][feature])
-            plt.plot(aux, label=modulations[mod])   
-            #df = pd.DataFrame(aux)
-            #sns.relplot(data=df, kind="line")
+            plt.plot(aux, label=modulations[mod])
         plt.legend(loc='best')
         plt.savefig(join(figure_folder,'Feature {}'.format(feature) + ".png"), bbox_inches='tight', dpi=300)
     
     #TODO:check if features calculations is correct
 if __name__ == "__main__":
     print("Check main file for features specifications!")
-    plotFeatures()
+    modulations = ['8PSK', '16PSK', '16QAM', '64QAM', '256QAM', 'BPSK', 'QPSK']
+    snr = np.linspace(-20, 30, 26, dtype=int)
+    plotFeatures(modulations, snr)
