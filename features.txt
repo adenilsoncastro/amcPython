@@ -11,3 +11,9 @@ Std of the CN Instantaneous Amplitude
 Cumulant Order 20
 Cumulant Order 21
 Cumulant Order 40
+Cumulant Order 41
+Cumulant Order 42
+Cumulant Order 60
+Cumulant Order 61
+Cumulant Order 62
+Cumulant Order 63

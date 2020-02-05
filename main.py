@@ -10,12 +10,12 @@ import functions
 
 dataFolder = pathlib.Path("../dataset/201801a_splitted/")
 onlyFiles = [f.split(".")[0] for f in listdir(dataFolder) if isfile(join(dataFolder, f))]  # List all data files available
-frames = 100  # Up to 4096
-frameSize = 100  # Up to 1024
-nFeatures = 13
+frames = 250  # Up to 4096
+frameSize = 512  # Up to 1024
+nFeatures = 19
 
-#modulations = ['8PSK', '16PSK', '16QAM', '64QAM', '256QAM', 'BPSK', 'OQPSK']
-modulations = ['16PSK', '16QAM', '64QAM', 'BPSK', 'OQPSK']
+modulations = ['8PSK', '16PSK', '16QAM', '64QAM', '256QAM', 'BPSK', 'OQPSK']
+#modulations = ['16PSK', '16QAM', '64QAM', 'BPSK', 'OQPSK']
 snr = np.linspace(-14, 20, 18, dtype=int)
 
 def generateFeaturesData(modulations, snr):

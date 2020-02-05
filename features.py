@@ -22,7 +22,13 @@ def calculate_features(input_signal):
     f11 = functions.cum20(input_signal)
     f12 = functions.cum21(input_signal)
     f13 = functions.cum40(input_signal)
-    result = [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13]
+    f14 = functions.cum41(input_signal)
+    f15 = functions.cum42(input_signal)
+    f16 = functions.cum60(input_signal)
+    f17 = functions.cum61(input_signal)
+    f18 = functions.cum62(input_signal)
+    f19 = functions.cum63(input_signal)
+    result = [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19]
     return result
 
 def plotFeatures(modulations, snrValues):
@@ -48,7 +54,7 @@ def plotFeatures(modulations, snrValues):
                 meanFeatures[mod][snr][feature] = np.mean(aux)                
 
     for feature in range(len(meanFeatures[mod][snr])):
-        print("Calculating feature {}".format(feature))
+        print("Ploting feature {}".format(feature))
         plt.figure(dpi=300)
         plt.xlabel('SNR')
         plt.xticks(np.arange(len(snrValues)), [str(i) for i in snrValues], rotation=20)    
@@ -66,6 +72,6 @@ def plotFeatures(modulations, snrValues):
 
 if __name__ == "__main__":
     print("Check main file for features specifications!")
-    modulations = ['16PSK', '16QAM', '64QAM', 'BPSK', 'OQPSK']
+    modulations = ['8PSK', '16PSK', '16QAM', '64QAM', '256QAM', 'BPSK', 'OQPSK']
     snr = np.linspace(-14, 20, 18, dtype=int)
     plotFeatures(modulations, snr)
