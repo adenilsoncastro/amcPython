@@ -7,14 +7,15 @@ from os import listdir
 from os.path import isfile, join
 import features as ft
 import functions
+from multiprocessing import Process
 
 dataFolder = pathlib.Path("../dataset/201801a_splitted/")
 onlyFiles = [f.split(".")[0] for f in listdir(dataFolder) if isfile(join(dataFolder, f))]  # List all data files available
 frames = 250  # Up to 4096
-frameSize = 512  # Up to 1024
-nFeatures = 19
+frameSize = 250  # Up to 1024
+nFeatures = 22
 
-modulations = ['8PSK', '16PSK', '16QAM', '64QAM', '256QAM', 'BPSK', 'OQPSK']
+modulations = ['8PSK', '16PSK', '16QAM', '256QAM', 'BPSK', 'OQPSK']
 #modulations = ['16PSK', '16QAM', '64QAM', 'BPSK', 'OQPSK']
 snr = np.linspace(-14, 20, 18, dtype=int)
 

@@ -3,7 +3,7 @@ Std of the Instantaneous Phase
 Std of the Absolute Instantaneous Frequency
 Std of the Instantaneous Frequency
 Kurtosis of the Absolute Value
-Kurtosis of th Absolute Frequency
+Kurtosis of the Absolute Frequency
 Gmax
 Squared Mean of the CN Absolute Amplitude
 Std of the Absolute CN Instantaneous Amplitude
@@ -17,3 +17,6 @@ Cumulant Order 60
 Cumulant Order 61
 Cumulant Order 62
 Cumulant Order 63
+Mean Value of the Signal Magnitude
+Normalized Sqrt Value of Sum of Amplitude
+Ratio of I/Q Components
