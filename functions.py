@@ -180,7 +180,7 @@ def cum61(input):
     output = aux2 * aux
     '''
     output = moment(input, 6, 1) - (5 * moment(input, 2, 1) * moment(input, 4, 0)) - (10 * moment(
-            input, 2, 0) * moment(input, 4, 1)) + (30 * (moment(input, 2, 0) ** 2) * moment(input, 2, 0))
+                    input, 2, 0) * moment(input, 4, 1)) + (30 * (moment(input, 2, 0) ** 2) * moment(input, 2, 0))
     return abs(output)
 
 
@@ -206,9 +206,9 @@ def cum62(input):
     output = aux2 * aux
     '''
     output = moment(input, 6, 2) - (6 * moment(input, 2, 0) * moment(input, 4, 2)) - \
-            (8 * moment(input, 2, 1) * moment(input, 4, 1)) - (moment(input, 2, 2) * \
-            moment(input, 4, 0)) + (6 * (moment(input, 2, 0) ** 2) * moment(input, 2, 2)) + \
-            (24 * (moment(input, 2, 1) ** 2) * moment(input, 2, 0))
+                    (8 * moment(input, 2, 1) * moment(input, 4, 1)) - (moment(input, 2, 2) * \
+                    moment(input, 4, 0)) + (6 * (moment(input, 2, 0) ** 2) * moment(input, 2, 2)) + \
+                    (24 * (moment(input, 2, 1) ** 2) * moment(input, 2, 0))
     return abs(output)
 
 
@@ -233,9 +233,9 @@ def cum63(input):
     output = aux2 * aux
     '''
     output = moment(input, 6, 3) - (9 * moment(input, 2, 1) * moment(input, 4, 2)) + \
-            (12 * (moment(input, 2, 1) ** 3)) - (3 * moment(input, 2, 0) * moment(input, 4, 3)) - \
-            (3 * moment(input, 2, 2) * moment(input, 4, 1)) + (18 * moment(input, 2, 0) * \
-            moment(input, 2, 1) * moment(input, 2, 2))
+                    (12 * (moment(input, 2, 1) ** 3)) - (3 * moment(input, 2, 0) * moment(input, 4, 3)) - \
+                    (3 * moment(input, 2, 2) * moment(input, 4, 1)) + (18 * moment(input, 2, 0) * \
+                    moment(input, 2, 1) * moment(input, 2, 2))
     return abs(output)
 
 

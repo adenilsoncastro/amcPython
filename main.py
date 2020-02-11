@@ -7,7 +7,6 @@ from os import listdir
 from os.path import isfile, join
 import features as ft
 import functions
-from multiprocessing import Process
 
 dataFolder = pathlib.Path("../dataset/201801a_splitted/")
 onlyFiles = [f.split(".")[0] for f in listdir(dataFolder) if isfile(join(dataFolder, f))]  # List all data files available
