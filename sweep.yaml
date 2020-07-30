@@ -1,0 +1,40 @@
+program: rna.py
+method: bayes
+metric:
+  name: val_accuracy
+  goal: maximize
+parameters:
+  epochs:
+    distribution: int_uniform
+    max: 500
+    min: 100
+  dropout:
+    distribution: uniform
+    max: 0.5
+    min: 0.1
+  optimizer:
+    distribution: categorical
+    values:
+      - adam
+      - rmsprop
+  activation:
+    distribution: categorical
+    values:
+      - tanh
+      - sigmoid
+  layer_size_hl1:
+    distribution: int_uniform
+    max: 100
+    min: 10
+  layer_size_hl2:
+    distribution: int_uniform
+    max: 100
+    min: 10
+  layer_size_hl3:
+    distribution: int_uniform
+    max: 100
+    min: 10
+  initializer:
+    values:
+      - he_normal
+      - random_normal
