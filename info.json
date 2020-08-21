@@ -1,7 +1,7 @@
 {
 	"frameSize": 2048,
 	"numberOfFrames": 1000,
-	"numberOfFeatures": 22,
+	"numberOfFeatures": 6,
 	"dataSetForTraining": "matlab",
 	"dataSetForTesting": "matlab",
 	"modulations": {
@@ -10,7 +10,6 @@
 			"QPSK",
 			"PSK8",
 			"QAM16",
-			"QAM64",
 			"noise"
 		],
 		"labels": {
@@ -18,8 +17,7 @@
 			"QPSK": 1,
 			"PSK8": 2,
 			"QAM16": 3,
-			"QAM64": 4,
-			"noise": 5
+			"noise": 4
 		}
 	},
 	"snr": {
@@ -91,28 +89,12 @@
 			"Ratio of I/Q Components"
 		],
 		"using": [
-			0,
-			1,
-			2,
 			3,
-			4,
 			5,
-			6,
-			7,
 			8,
-			9,
-			10,
-			11,
 			12,
-			13,
 			14,
-			15,
-			16,
-			17,
-			18,
-			19,
-			20,
-			21			
+			18
 		],
 		"functions": {
 			"0": "functions.std_deviation((abs(functions.instantaneous_phase(input_signal))))",
