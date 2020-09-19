@@ -4,8 +4,8 @@ import os
 from os.path import join
 import numpy as np
 
-path = "C:\\Users\\adeni\\Documents\\Mestrado\\amcpy\\rna"
-weights = "weights-96ec22de.h5"
+path = "C:\\Users\\adeni\\Documents\\Mestrado\\amcPython\\rna\\Sweep 13"
+weights = "weights-100bc8b4.h5"
 
 with h5py.File(join(path,weights), "r") as f:
     main_groups = f.keys()

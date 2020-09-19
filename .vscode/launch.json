@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["--epochs", "95", "--dropout", "0.2615", "--optimizer", "adam", "--initializer", "random_normal", "--layer_size_hl1", "50", "--layer_size_hl2", "36", "--layer_size_hl3", "42", "--activation", "tanh" ]
+            "args": ["--epochs", "95", "--dropout", "0.1467", "--optimizer", "rmsprop", "--initializer", "random_normal", "--layer_size_hl1", "30", "--layer_size_hl2", "12", "--layer_size_hl3", "13", "--activation", "tanh" ]
         }
     ]
 }

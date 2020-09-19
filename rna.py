@@ -240,6 +240,8 @@ def evaluate_rna(id="foo", test_size=500):  # Make a prediction using some sampl
         model = load_model(rna)
         print("\nUsing RNA with id {}.".format(id))
 
+        print(model.summary())
+
         result = np.zeros((len(modulations), number_of_snr))
         for i, mod in enumerate(test_data_files):
             print("Evaluating {}".format(mod.split("_")[0]))
@@ -356,9 +358,9 @@ if __name__ == '__main__':
         layer_size_hl2=int(arguments.layer_size_hl2),
         layer_size_hl3=int(arguments.layer_size_hl3)
     )
-    wandb.init(project="amcpy", config=hyperparameterDefaults)
+    wandb.init(project="amcPython", config=hyperparameterDefaults)
     config = wandb.config
 
-    #evaluate_rna(id="96ec22de")
+    #evaluate_rna(id="100bc8b4")
     train_rna(config)
     #quantize_rna(id="96ec22de")
