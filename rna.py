@@ -67,7 +67,7 @@ def process_data():  # Prepare the data for the magic
 
         for snr in snr_list:
             for frame in range(info_json['numberOfFrames']):
-                data_rna[location, :] = data[snr - (21 - number_of_snr)][frame][:]
+                data_rna[location, :] = data[snr][frame][:]
                 location += 1
 
         # An array containing the labels for
@@ -248,8 +248,8 @@ def evaluate_rna(id="foo", test_size=500):  # Make a prediction using some sampl
             with open(join(data_folder, mod), 'rb') as evaluating_data:
                 data = pickle.load(evaluating_data)
             for j, snr in enumerate(snr_list):
-                random_samples = np.random.choice(data[snr - (21 - number_of_snr)][:].shape[0], test_size)
-                data_test = [data[snr - (21 - number_of_snr)][i] for i in random_samples]
+                random_samples = np.random.choice(data[snr][:].shape[0], test_size)
+                data_test = [data[snr][i] for i in random_samples]
                 data_test = normalize(data_test, norm='l2')
                 right_label = [info_json['modulations']['labels'][mod.split("_")[0]] for _ in range(len(data_test))]
                 predict = model.predict_classes(data_test)
@@ -307,8 +307,8 @@ def quantize_rna(id):
             right_label = []
             predicted_label = []
             for _ in range(500):
-                random_sample = np.random.choice(data[snr - (21 - number_of_snr)][:].shape[0], 1)
-                data_test = [data[snr - (21 - number_of_snr)][i] for i in random_sample]
+                random_sample = np.random.choice(data[snr][:].shape[0], 1)
+                data_test = [data[snr][i] for i in random_sample]
                 data_test = normalize(data_test, norm='l2')                
                 partial_right_label = info_json['modulations']['labels'][mod.split("_")[0]]
                 data_test_float32 = data_test.astype(np.float32)
@@ -334,6 +334,18 @@ def quantize_rna(id):
 
     figure.clf()
     plt.close(figure)
+
+def test_rna(id, test_data):
+    rna_folder = pathlib.Path(join(os.getcwd(), 'rna'))
+    
+    print("\nUsing RNA with id {}.".format(id))
+    rna = join(str(rna_folder), "rna-" + id + ".h5")
+    model = load_model(rna)
+    print(model.summary())
+    test_data_norm = normalize(np.array(test_data).reshape(1,-1), norm='l2')
+    predict = model.predict(test_data_norm)
+    mod = np.argmax(predict)
+    print(modulations[mod] + " with " + str(format(np.amax(predict)*100,'.5f')) + "% of confidence.")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='RNA argument parser')
@@ -361,6 +373,12 @@ if __name__ == '__main__':
     wandb.init(project="amcPython", config=hyperparameterDefaults)
     config = wandb.config
 
+    #train_rna(config)
     #evaluate_rna(id="100bc8b4")
-    train_rna(config)
-    #quantize_rna(id="96ec22de")
+    #quantize_rna(id="100bc8b4")
+
+    #BPSK
+    #ft_test= [0.0022644146746740087,0.15887439132425418,0.004620644121856956,0.02474994447608648,0.024456215657531373,0.15672203419643238]
+    #QAM16
+    ft_test = [0.002836946751678705, 0.2076747591564135, 0.006376183923282726, 0.010579590676218718, 0.011959777704354099, 0.028132999066687578]
+    test_rna("100bc8b4", ft_test)
