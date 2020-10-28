@@ -17,6 +17,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import normalize
 from tensorflow.keras import Sequential
+from tensorflow.keras import backend
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import plot_model
@@ -237,7 +238,7 @@ def evaluate_rna(id="foo", test_size=500):  # Make a prediction using some sampl
         plt.close(figure)
     else:  # If you specify a RNA id, it will use it and make the exact same steps as the previous one
         rna = join(str(rna_folder), "rna-" + id + ".h5")
-        model = load_model(rna)
+        model = load_model(rna, compile=False)
         print("\nUsing RNA with id {}.".format(id))
 
         print(model.summary())
@@ -335,17 +336,46 @@ def quantize_rna(id):
     figure.clf()
     plt.close(figure)
 
-def test_rna(id, test_data):
+def test_rna(id, mod, snr):
     rna_folder = pathlib.Path(join(os.getcwd(), 'rna'))
-    
+    data_folder = pathlib.Path(join(os.getcwd(), "mat-data", "pickle"))
+
     print("\nUsing RNA with id {}.".format(id))
     rna = join(str(rna_folder), "rna-" + id + ".h5")
-    model = load_model(rna)
+    model = load_model(rna, compile=False)    
     print(model.summary())
-    test_data_norm = normalize(np.array(test_data).reshape(1,-1), norm='l2')
+
+    with open(join(data_folder, mod + '_features.pickle'), 'rb') as evaluating_data:
+        data = pickle.load(evaluating_data)
+        test_data_norm = normalize(data[snr][0].reshape(1,-1), norm='l2')
+
     predict = model.predict(test_data_norm)
-    mod = np.argmax(predict)
-    print(modulations[mod] + " with " + str(format(np.amax(predict)*100,'.5f')) + "% of confidence.")
+    result = np.argmax(predict)
+    print(modulations[result] + " with " + str(format(np.amax(predict)*100,'.5f')) + "% of confidence.")
+
+def get_partial_layers_values(id, mod, snr, layer='all'):
+    rna_folder = pathlib.Path(join(os.getcwd(), 'rna'))
+    data_folder = pathlib.Path(join(os.getcwd(), "mat-data", "pickle"))
+
+    print("\nUsing RNA with id {}.".format(id))
+    rna = join(str(rna_folder), "rna-" + id + ".h5")
+    model = load_model(rna, compile=False)    
+    print(model.summary())
+
+    with open(join(data_folder, mod + '_features.pickle'), 'rb') as evaluating_data:
+        data = pickle.load(evaluating_data)
+        test_data_norm = normalize(data[snr][0].reshape(1,-1), norm='l2')
+    
+    inp = model.input
+    layers = [layer.output for layer in model.layers]
+    functions = [backend.function([inp], [out]) for out in layers]
+
+    layer_outputs = [func(test_data_norm) for func in functions]
+    print(layer_outputs)
+    with open('layers_output.txt', 'w') as f:
+        for line in layer_outputs:
+            f.write(str(line) + "\n")
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='RNA argument parser')
@@ -374,11 +404,8 @@ if __name__ == '__main__':
     config = wandb.config
 
     #train_rna(config)
-    #evaluate_rna(id="100bc8b4")
+    #evaluate_rna(id="1d48d172")
     #quantize_rna(id="100bc8b4")
 
-    #BPSK
-    #ft_test= [0.0022644146746740087,0.15887439132425418,0.004620644121856956,0.02474994447608648,0.024456215657531373,0.15672203419643238]
-    #QAM16
-    ft_test = [0.002836946751678705, 0.2076747591564135, 0.006376183923282726, 0.010579590676218718, 0.011959777704354099, 0.028132999066687578]
-    test_rna("100bc8b4", ft_test)
+    test_rna("1d48d172", 'BPSK', 10)
+    #get_partial_layers_values("1d48d172", 'BPSK', 10)

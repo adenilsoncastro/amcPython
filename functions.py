@@ -28,7 +28,8 @@ def std_deviation(signal_input):
     aux2 = aux1 ** 2
     aux3 = sum(aux2)
     aux4 = 1 / (len(signal_input) - 1)
-    output = math.sqrt(aux3 * aux4)
+    #output = math.sqrt(aux3 * aux4)
+    output = aux3 * aux4
     return output
 
 
@@ -58,12 +59,16 @@ def instantaneous_frequency(signal_input):
 
 
 def instantaneous_absolute(signal_input):
-    output = abs(signal_input)
+    #output = abs(signal_input)
+    aux1 = np.real(signal_input) ** 2
+    aux2 = np.imag(signal_input) ** 2
+    output = aux1 + aux2
     return output
 
 
 def instantaneous_cn_absolute(signal_input):
-    output = abs(signal_input) / mean(abs(signal_input)) - 1
+    #output = abs(signal_input) / mean(abs(signal_input)) - 1
+    output = instantaneous_absolute(signal_input) / mean(instantaneous_absolute(signal_input)) - 1
     return output
 
 
@@ -105,7 +110,8 @@ def cum40(input):
     output = aux7 * aux6
     '''
     output = moment(input, 4, 0) - (3 * (moment(input, 2, 0) ** 2))
-    return abs(output)
+    #return abs(output)
+    return instantaneous_absolute(output)
 
 
 def cum41(input):
@@ -137,9 +143,12 @@ def cum42(input):
     aux4 = 1/len(input)
     output = aux3 * aux4
     '''
-    output = moment(input, 4, 2) - (abs(moment(input, 2, 0))
+    #output = moment(input, 4, 2) - (abs(moment(input, 2, 0))
+    #                                ** 2) - (2 * (moment(input, 2, 1) ** 2))
+    output = moment(input, 4, 2) - (instantaneous_absolute(moment(input, 2, 0))
                                     ** 2) - (2 * (moment(input, 2, 1) ** 2))
-    return abs(output)
+    #return abs(output)
+    return instantaneous_absolute(output)
 
 
 def cum60(input):
@@ -234,7 +243,8 @@ def cum63(input):
                     (12 * (moment(input, 2, 1) ** 3)) - (3 * moment(input, 2, 0) * moment(input, 4, 3)) - \
                     (3 * moment(input, 2, 2) * moment(input, 4, 1)) + (18 * moment(input, 2, 0) * \
                     moment(input, 2, 1) * moment(input, 2, 2))
-    return abs(output)
+    #return abs(output)
+    return instantaneous_absolute(output)
 
 
 def meanAbsolute(input):

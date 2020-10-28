@@ -8,7 +8,8 @@ import pathlib
 import os
 from os.path import join
 
-from tqdm import tqdm
+import numpy as np
+import scipy.io
 
 def calculate_features(input_signal):
     with open("./info.json") as handle:
@@ -21,6 +22,21 @@ def calculate_features(input_signal):
         result.append(aux)
 
     return result
+
+def step_calc():
+    info = {'BPSK': 'signal_bpsk', 'QPSK': 'signal_qpsk', 'PSK8': 'signal_8psk', 'QAM16': 'signal_qam16', 'QAM64': 'signal_qam64', 'noise': 'signal_noise'}
+    modulation = 'BPSK'
+    mat_file_name = pathlib.Path(join(os.getcwd(), 'mat-data', modulation + '.mat'))
+
+    data_mat = scipy.io.loadmat(mat_file_name)
+    print(str(mat_file_name) + ' file loaded...')
+    parsed_signal = data_mat[info[modulation]]
+    print('Signal parsed...')
+
+    info = parsed_signal[10, 1, 0:2047]
+
+    calculate_features(info)
+
 
 def plot_ft_histogram(option):
     with open("./info.json") as handle:
@@ -125,4 +141,5 @@ if __name__ == '__main__':
     #Option 1 will create a graphic to each feature X snr X modulation
     #Option 2 will create a grapchic with all features X snr X modulation
     #OPtion 3 will create a graphic to each feature x snr, grouped by modulation
-    plot_ft_histogram(1)
+    #plot_ft_histogram(1)
+    step_calc()
