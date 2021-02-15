@@ -43,8 +43,8 @@ def plot_ft_histogram(option):
         info_json = json.load(handle)
 
     modulations = info_json['modulations']['names'] 
-    number_of_frames = 1000#info_json['numberOfFrames']
-    number_of_features = 22#len(info_json['features']['using'])
+    number_of_frames = info_json['numberOfFrames']
+    number_of_features = len(info_json['features']['using'])
     features_files = [f + "_features.pickle" for f in modulations]
     features_names = info_json['features']['names']
     features_using = info_json['features']['using']
@@ -68,7 +68,7 @@ def plot_ft_histogram(option):
                     for frame in range(number_of_frames):
                         ft.append(data[j][frame][feature])
                     
-                    """ n, bins, patches = plt.hist(x=ft, bins='auto', color='#0504aa', alpha=0.7, rwidth=0.85)
+                    n, bins, patches = plt.hist(x=ft, bins='auto', color='#0504aa', alpha=0.7, rwidth=0.85)
                     plt.grid(axis='y', alpha=0.75)
                     plt.xlabel('Value')
                     plt.ylabel('Frequency')
@@ -76,7 +76,7 @@ def plot_ft_histogram(option):
                     maxfreq = n.max()
                     plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
                     plt.savefig(join(fig_folder, 'histogram', 'histogram_specific_{}_{}dB_{}'.format(feature,snr_values[snr], mod.split('_')[0]) + '.png'), bbox_inches='tight', dpi=300)
-                    plt.clf() """
+                    plt.clf()
                     
                     report.write("Feature:{} - SNR:{}dB - Max:{} - Min:{}\n".format(feature,snr_values[snr], str(max(ft)), str(min(ft))))
 
@@ -126,7 +126,7 @@ def plot_ft_histogram(option):
                     plt.grid(axis='y', alpha=0.75)
                     plt.xlabel('Value')
                     plt.ylabel('Frequency')
-                    plt.title('Histogram of feature {} \nfor SNR {}dB'.format(features_names[feature],snr_values[snr]))                    
+                    plt.title('Histogram of feature {} \nfor SNR {}dB'.format(features_names[info_json['features']['using'][feature]],snr_values[snr]))                    
                     maxfreq = n.max()
                     plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
                 plt.legend(modulations)
@@ -141,5 +141,5 @@ if __name__ == '__main__':
     #Option 1 will create a graphic to each feature X snr X modulation
     #Option 2 will create a grapchic with all features X snr X modulation
     #OPtion 3 will create a graphic to each feature x snr, grouped by modulation
-    #plot_ft_histogram(1)
+    plot_ft_histogram(3)
     step_calc()
