@@ -70,8 +70,8 @@ def plot_ft_histogram(option):
                     
                     n, bins, patches = plt.hist(x=ft, bins='auto', color='#0504aa', alpha=0.7, rwidth=0.85)
                     plt.grid(axis='y', alpha=0.75)
-                    plt.xlabel('Value')
-                    plt.ylabel('Frequency')
+                    plt.xlabel('Feature Value')
+                    plt.ylabel('Counting')
                     plt.title('Histogram of {} \nfor SNR {}dB of {}'.format(features_names[feature], snr_values[snr], mod))
                     maxfreq = n.max()
                     plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
@@ -99,8 +99,8 @@ def plot_ft_histogram(option):
                 for k, element in enumerate(ft):
                     n, bins, patches = plt.hist(x=ft[k], bins='auto', alpha=0.7, rwidth=0.85)
                     plt.grid(axis='y', alpha=0.75)
-                    plt.xlabel('Value')
-                    plt.ylabel('Frequency')
+                    plt.xlabel('Feature Value')
+                    plt.ylabel('Counting')
                     plt.title('Histogram of all features \nfor SNR {}dB of {}'.format(snr_values[snr], mod))
                     plt.legend(features_using)
                     maxfreq = n.max()
@@ -124,8 +124,8 @@ def plot_ft_histogram(option):
                 for k, element in enumerate(ft):
                     n, bins, patches = plt.hist(x=ft[k],bins='auto', alpha=0.7, rwidth=0.85)
                     plt.grid(axis='y', alpha=0.75)
-                    plt.xlabel('Value')
-                    plt.ylabel('Frequency')
+                    plt.xlabel('Feature Value')
+                    plt.ylabel('Counting')
                     plt.title('Histogram of feature {} \nfor SNR {}dB'.format(features_names[info_json['features']['using'][feature]],snr_values[snr]))                    
                     maxfreq = n.max()
                     plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)

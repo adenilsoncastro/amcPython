@@ -136,6 +136,8 @@ def evaluate_rna(id):
     print(model.summary())
 
     for j, snr in enumerate(snr_list):
+        result = []
+        target = []
         for i, mod in enumerate(test_data_files):
             with open(join(data_folder, mod), 'rb') as evaluating_data:
                 data = pickle.load(evaluating_data)
@@ -161,6 +163,7 @@ def plot_metrics(report, acc):
     f1_score = []
 
     for mod in range(len(modulations)):
+        plt.grid(b=True)
         plt.title('{} Performance'.format(modulations[mod]))
         plt.ylabel('Performance')
         plt.xlabel('SNR [dB]')
@@ -174,9 +177,9 @@ def plot_metrics(report, acc):
         for item in acc[mod]:
             accuracy.append(item)
 
-        plt.plot(accuracy, label='accuracy', linewidth=2)
+        plt.plot(accuracy, label='accuracy', linewidth=4)
         plt.plot(precision, label='precision', linewidth=2)
-        plt.plot(recall, label='recall', linewidth=2)
+        plt.plot(recall, label='recall', linewidth=2, linestyle='--', color='r')
         plt.plot(f1_score, label='f1-score', linewidth=2)
         plt.legend(loc='best')
         #plt.show()
@@ -243,7 +246,7 @@ def get_partial_layers_values(id, mod, snr, layer='all'):
             f.write(str(line) + "\n")
 
 if __name__ == '__main__':
-    evaluate_rna(id="1d48d172")
+    evaluate_rna(id="100bc8b4")
     #predict(id="1d48d172")
     #quantize_rna(id="100bc8b4")
     #get_partial_layers_values("1d48d172", 'QAM16', 10)

@@ -67,6 +67,7 @@ for m in range(number_of_modulations):
 # Plot graphics using only mean
 for n in range(number_of_features):
     plt.figure(num=n, figsize=(6.4, 3.6), dpi=300)
+    plt.grid(b=True)
     # Plot without for loop because of bug
     # TODO: fix bug using for loop to plot (result is graphics with same color)
     plt.plot(snr_array[0, :, n, n], mean_features[0, :, n, n], '#03cffc', linewidth=1.0)  # BPSK
@@ -74,7 +75,7 @@ for n in range(number_of_features):
     plt.plot(snr_array[2, :, n, n], mean_features[2, :, n, n], '#be03fc', linewidth=1.0)  # PSK8
     plt.plot(snr_array[3, :, n, n], mean_features[3, :, n, n], '#fc0320', linewidth=1.0)  # QAM16
     #plt.plot(snr_array[4, :, n, n], mean_features[4, :, n, n], 'g', linewidth=1.0)  # QAM64
-    plt.plot(snr_array[5, :, n, n], mean_features[5, :, n, n], 'k', linewidth=1.0)  # Noise
+    plt.plot(snr_array[4, :, n, n], mean_features[4, :, n, n], 'k', linewidth=1.0)  # Noise
     plt.title('Feature ' + str(n + 1) + ' - ' +  feature_names[info_json['features']['using'][n]])
     plt.xlabel('SNR')
     plt.ylabel('Value')
@@ -96,12 +97,13 @@ for n in range(number_of_features):
 # Plot graphics with all frames
 for n in range(number_of_features):
     plt.figure(num=n, figsize=(6.4, 3.6), dpi=300)
+    plt.grid(b=True)
     plt.plot(snr_array[0, :, :, n], features[0][:, :, n], '#03cffc', linewidth=1.0)  # BPSK
     plt.plot(snr_array[1, :, :, n], features[1][:, :, n], '#6203fc', linewidth=1.0)  # QPSK
     plt.plot(snr_array[2, :, :, n], features[2][:, :, n], '#be03fc', linewidth=1.0)  # PSK8
     plt.plot(snr_array[3, :, :, n], features[3][:, :, n], '#fc0320', linewidth=1.0)  # QAM16
     #plt.plot(snr_array[4, :, :, n], features[4][:, :, n], 'g', linewidth=1.0)  # QAM64
-    plt.plot(snr_array[5, :, :, n], features[5][:, :, n], 'k', linewidth=1.0)  # Noise
+    plt.plot(snr_array[4, :, :, n], features[4][:, :, n], 'k', linewidth=1.0)  # Noise
     plt.xlabel('SNR')
     plt.ylabel('Value')
     plt.title('Feature ' + str(n + 1) + ' - ' + feature_names[info_json['features']['using'][n]])
@@ -124,6 +126,7 @@ for n in range(number_of_features):
 # Plot graphics with error bar using standard deviation
 for n in range(number_of_features):
     plt.figure(num=n, figsize=(6.4, 3.6), dpi=300)
+    plt.grid(b=True)
     plt.errorbar(snr_array[0, :, n, n],
                  mean_features[0, :, n, n],
                  yerr=std_features[0, :, n, n]*3, color='#03cffc')
@@ -139,11 +142,11 @@ for n in range(number_of_features):
     #plt.errorbar(snr_array[4, :, n, n],
      #            mean_features[4, :, n, n],
      #            yerr=std_features[4, :, n, n], color='g')
-    plt.errorbar(snr_array[5, :, n, n],
-                 mean_features[5, :, n, n],
-                 yerr=std_features[5, :, n, n]*3, color='k')
+    plt.errorbar(snr_array[4, :, n, n],
+                 mean_features[4, :, n, n],
+                 yerr=std_features[4, :, n, n]*3, color='k')
     plt.xlabel('SNR')
-    plt.ylabel('Value with sigma')
+    plt.ylabel('Average Value')
     plt.title('Feature ' + str(n + 1) + ' - ' + feature_names[info_json['features']['using'][n]])
     plt.legend(mod_labels)
     if data_set == "rayleigh":
